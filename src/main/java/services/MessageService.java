@@ -1,0 +1,126 @@
+
+package services;
+
+import java.util.Collection;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.MessageRepository;
+import domain.Actor;
+import domain.Folder;
+import domain.Message;
+
+@Service
+@Transactional
+public class MessageService {
+
+	public MessageService() {
+		super();
+	}
+
+
+	@Autowired
+	private MessageRepository	messageRepository;
+	@Autowired
+	private FolderService		folderService;
+	@Autowired
+	private ActorService		actorService;
+
+
+	// CRUD methods --------------------------------------------------------------------------------
+	public Message create() {
+		this.actorService.checkActorIsAuthenticated();
+		Message res = new Message();
+		long milliseconds = System.currentTimeMillis() - 100;
+		Date moment = new Date(milliseconds);
+		res.setSend(this.actorService.findByPrincipal());
+		res.setMoment(moment);
+		return res;
+	}
+
+	public Message findOne(int messageId) {
+		// Comprueba si el actor está autenticado
+		this.actorService.checkActorIsAuthenticated();
+		Message res;
+		res = this.messageRepository.findOne(messageId);
+		return res;
+	}
+
+	public Collection<Message> findAll() {
+		// Comprueba si el actor está autenticado
+		this.actorService.checkActorIsAuthenticated();
+		Collection<Message> res = this.messageRepository.findAll();
+		return res;
+	}
+
+	public Message save(Message message) {
+		// Comprueba si el actor está autenticado
+		this.actorService.checkActorIsAuthenticated();
+		return this.messageRepository.save(message);
+	}
+
+	public void delete(Message message) {
+		// Comprueba si el actor está autenticado
+		this.actorService.checkActorIsAuthenticated();
+		//Coprobamos que el mensaje existe
+		Assert.isTrue(this.messageRepository.exists(message.getId()));
+		Assert.isTrue(message.getFolder().getActor().getId() == this.actorService.findByPrincipal().getId());
+		if (message.getFolder().getName().equals("trashbox") && message.getFolder().getIsSystem() == true)
+			this.messageRepository.delete(message);
+		else {
+			Folder f = this.folderService.findActorAndFolder(this.actorService.findByPrincipal().getId(), "trashbox");
+			this.moveMessage(f, message);
+		}
+
+	}
+
+	// Other methods ------------------------------------------------------------------
+
+	//método para mover un mensaje de una carpeta a otra
+	public void moveMessage(Folder destinyFolder, Message msg) {
+		// Comprueba si el actor está autenticado
+		this.actorService.checkActorIsAuthenticated();
+		// Comprobamos que la carpeta destino pertenece al actor
+		Actor sender = this.actorService.findByPrincipal();
+		Collection<Folder> folders = sender.getFolders();
+		Assert.isTrue(folders.contains(destinyFolder));
+		msg.setFolder(destinyFolder);
+		this.messageRepository.save(msg);
+	}
+
+	public void sendMessage(Message message) {
+		this.actorService.checkActorIsAuthenticated();
+		Assert.isTrue(message.getSend().getId() == this.actorService.findByPrincipal().getId());
+		Folder folderOutbox;
+		Message msg = message.clone();
+		for (Folder f : message.getSend().getFolders())
+			if (f.getName().equalsIgnoreCase("outbox")) {
+				folderOutbox = f;
+				msg.setFolder(folderOutbox);
+				this.messageRepository.save(msg);
+				break;
+			}
+
+		for (Actor a : message.getReceives()) {
+			Message msgRe = message.clone();
+			Folder folderInbox;
+			for (Folder f : a.getFolders())
+				if (f.getName().equalsIgnoreCase("inbox")) {
+					folderInbox = f;
+					msgRe.setFolder(folderInbox);
+					this.messageRepository.save(msgRe);
+					break;
+				}
+		}
+	}
+
+	public Collection<Message> findMessagesByFolder(int folderId) {
+		Collection<Message> messages = this.messageRepository.findMessagesByFolder(folderId);
+		return messages;
+	}
+
+}

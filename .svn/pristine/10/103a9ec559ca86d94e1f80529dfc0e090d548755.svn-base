@@ -1,0 +1,60 @@
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.CreditCardRepository;
+import domain.CreditCard;
+import domain.Manager;
+
+@Service
+@Transactional
+public class CreditCardService {
+	
+	@Autowired
+	private CreditCardRepository creditcardRepository ;
+	
+	@Autowired
+	private ActorService actorService;
+	
+	public CreditCardService(){
+		super();
+	}
+	
+	// CRUD methods --------------------------------------------------------------------------------
+	public CreditCard create() {
+		CreditCard res = new CreditCard();
+		res.setManager((Manager) actorService.findByPrincipal());
+		
+		return res;
+	}
+
+	public CreditCard findOne(int creditcardId) {
+		return creditcardRepository.findOne(creditcardId);
+	}
+
+	public Collection<CreditCard> findAll(){
+		return creditcardRepository.findAll();
+	}
+		
+	public CreditCard save(CreditCard creditcard) {
+		Assert.notNull(creditcard);
+		Assert.isTrue(creditcard.getManager().equals(actorService.findByPrincipal()));
+		return creditcardRepository.save(creditcard);
+	}
+
+	public void delete(CreditCard creditCard) {
+		Assert.notNull(creditCard);
+		Assert.isTrue(creditCard.getManager().equals(actorService.findByPrincipal()));
+		Assert.isTrue(creditcardRepository.exists(creditCard.getId()));
+		
+		creditcardRepository.delete(creditCard);
+		
+		Assert.isTrue(!creditcardRepository.exists(creditCard.getId()));
+	}
+
+}

@@ -1,0 +1,22 @@
+
+child.birthdate      = Fecha de nacimiento
+child.class          = Clases
+child.create         = Crear ni\u00F1o
+child.create.success = Creado correctamente
+child.delete         = Borrar
+child.delete.success = Borrado correctamente
+child.edit           = Editar
+child.edit.success   = Editado correctamente
+child.event          = Eventos
+child.name           = Nombre
+child.observaciones  = Observaci\u00F3n
+child.save           = Guardar
+child.surname        = Apellidos
+child.view           = Ver
+
+observation.dateCreation      = Fecha creaci\u00F3n
+observation.dateVisualization = Fecha visualizaci\u00F3n
+observation.description       = Descripci\u00F3n
+observation.nameClass         = Clase
+observation.nameTeacher       = Profesor/a
+observation.title             = T\u00EDtulo

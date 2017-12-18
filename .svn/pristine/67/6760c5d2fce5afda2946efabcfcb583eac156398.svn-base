@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	
+	<definition name="child/list" extends="master.page">	
+		<put-attribute name="title" value="Listar niños" />
+		<put-attribute name="body" value="/views/child/list.jsp" />
+	</definition>
+	
+	<definition name="child/create" extends="master.page">	
+		<put-attribute name="title" value="Editar niño" />
+		<put-attribute name="body" value="/views/child/create.jsp" />
+	</definition>
+	
+	<definition name="child/detail" extends="master.page">	
+		<put-attribute name="title" value="Detalles" />
+		<put-attribute name="body" value="/views/child/details.jsp" />
+	</definition>
+	
+</tiles-definitions>

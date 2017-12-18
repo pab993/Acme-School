@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * converters.xml * * Copyright (C) 2017 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd		
+	">
+
+	<util:list id="converters">
+
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		
+		<bean class="converters.StringToAdminConverter" />
+		<bean class="converters.AdminToStringConverter" />
+		
+		<bean class="converters.StringToBoardConverter" />
+		<bean class="converters.BoardToStringConverter" />
+		
+		<bean class="converters.StringToChildConverter" />
+		<bean class="converters.ChildToStringConverter" />
+		
+		<bean class="converters.StringToCommentConverter" />
+		<bean class="converters.CommentToStringConverter" />
+		
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		
+		<bean class="converters.StringToEventEntityConverter" />
+		<bean class="converters.EventEntityToStringConverter" />
+		
+		<bean class="converters.StringToFolderConverter" />
+		<bean class="converters.FolderToStringConverter" />
+		
+		<bean class="converters.StringToManagerConverter" />
+		<bean class="converters.ManagerToStringConverter" />
+		
+		<bean class="converters.StringToMessageConverter" />
+		<bean class="converters.MessageToStringConverter" />
+		
+		<bean class="converters.StringToObservationConverter" />
+		<bean class="converters.ObservationToStringConverter" />
+		
+		<bean class="converters.StringToParentConverter" />
+		<bean class="converters.ParentToStringConverter" />
+		
+		<bean class="converters.StringToPetitionConverter" />
+		<bean class="converters.PetitionToStringConverter" />
+		
+		<bean class="converters.StringToPlaceConverter" />
+		<bean class="converters.PlaceToStringConverter" />
+		
+		<bean class="converters.StringToSchoolConverter" />
+		<bean class="converters.SchoolToStringConverter" />
+		
+		<bean class="converters.StringToSchoolClassConverter" />
+		<bean class="converters.SchoolClassToStringConverter" />
+		
+		<bean class="converters.StringToSpecialEventConverter" />
+		<bean class="converters.SpecialEventToStringConverter" />
+		
+		<bean class="converters.StringToTeacherConverter" />
+		<bean class="converters.TeacherToStringConverter" />
+		
+		<bean class="converters.StringToYearSchoolConverter" />
+		<bean class="converters.YearSchoolToStringConverter" />
+
+		<bean class="converters.StringToEventEntityConverter" />
+		<bean class="converters.EventEntityToStringConverter" />
+
+	</util:list>
+
+</beans>

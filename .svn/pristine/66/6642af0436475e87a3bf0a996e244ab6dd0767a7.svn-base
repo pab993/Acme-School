@@ -1,0 +1,8 @@
+
+creditCard.brandName       = Nombre del banco
+creditCard.create          = Crear tarjeta de creditos
+creditCard.cvv             = CVV
+creditCard.expirationMonth = Mes de expiraci\u00F3n
+creditCard.expirationYear  = A\u00F1o de expiraci\u00F3n
+creditCard.holderName      = Nombre del titular
+creditCard.number          = N\u00FAmero

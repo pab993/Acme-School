@@ -1,0 +1,71 @@
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
+<jstl:choose>
+	<jstl:when test="${empty listPlace}">
+		<h3><spring:message code="event.places.empty"/></h3>
+	</jstl:when>
+	<jstl:otherwise>
+	
+		<form:form action="${requestURI}" modelAttribute="specialEvent">
+		
+			<form:hidden path="id" />
+			<form:hidden path="version" />
+			<form:hidden path="eventEntity" />
+			<form:hidden path="isCancel" />
+			<form:hidden path="eventEntity" />
+		
+			<div class="form-group">
+				<form:label path="priority">
+					<spring:message code="specialEvent.priority" />
+				</form:label>	
+				<form:select id="priority" path="priority" class="form-control">
+					<%-- <form:options items="${listPriority}"/> --%>
+					<spring:message code="message.priority.normal" var="lowHeader"/><form:option value="NORMAL" label="${lowHeader }" />
+					<spring:message code="message.priority.important" var="neutralHeader"/><form:option value="IMPORTANT" label="${neutralHeader }" />
+					<spring:message code="message.priority.very.important" var="highHeader"/><form:option value="VERY_IMPORTANT" label="${highHeader }" />
+				</form:select>
+				<form:errors path="priority" cssClass="error" />
+			</div>
+			<br/>
+		
+			<acme:textbox code="specialEvent.title" path="title" />
+			<br />
+			
+			<acme:textarea code="specialEvent.description" path="description" />
+			<br />
+			
+			<acme:select items="${listPlace}" itemLabel="name" code="specialEvent.place" path="place"/>
+			<br/>
+			
+			<acme:textbox code="specialEvent.space" path="space" />
+			<br />
+			
+			<acme:textbox code="specialEvent.dateInit" path="dateInit" />
+			<br />
+			
+			<acme:textbox code="specialEvent.dateFin" path="dateFin" />
+			<br />
+			
+			<acme:submit code="child.save" name="save" />&nbsp;
+			<security:authorize access="hasRole('TEACHER')">
+				<acme:cancel url="schoolClass/specialEvent/list.do?idSchoolClass=${idSchoolClass}" code="messageFolder.cancel"/>
+			</security:authorize>
+			<security:authorize access="hasRole('MANAGER')">
+				<acme:cancel url="school/specialEvent/list.do?idSchool=${idSchool}" code="messageFolder.cancel"/>
+			</security:authorize>
+			<br />
+		
+		</form:form>
+	
+	</jstl:otherwise>
+</jstl:choose>

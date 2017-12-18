@@ -1,0 +1,98 @@
+/* common.css
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ * 
+ */
+
+.principal {
+	min-width:100%;
+	max-width:100%;
+}
+
+
+.anuncio {
+max-width : 70%;
+min-width : 70%;
+margin-left: 2.5%;
+float:left;		
+}
+
+.footer {
+	min-width:100%;
+	max-width:100%;
+	float:left;	
+}
+
+.caja {
+font-family: sans-serif;
+font-size: 18px;
+font-weight: 400;
+margin-right:2.5%;
+max-width : 25%;
+min-width : 25%;
+float:left;	
+padding-left: 20px;
+padding-right: 20px;
+padding-bottom: 10px;
+border-radius: 10px;
+box-sizing: border-box;
+border: 2px solid #A5B1EF;
+color: #000000;
+background:#ffffff
+}
+.recuadro {
+font-family: sans-serif;
+font-size: 12px;
+font-weight: 200;
+margin-right:2.5%;
+max-width : 25%;
+min-width : 25%;	
+padding-left: 20px;
+padding-right: 20px;
+padding-bottom: 10px;
+border-radius: 2px;
+box-sizing: border-box;
+border: 2px solid #A5B1EF;
+color: #000000;
+background:#ffffff
+}
+.error {
+	color: red;
+	font-weight: bolder;
+}
+
+.message {
+	color: red;
+	font-weight: bolder;
+}
+
+.displayTitle {
+	color: #003f7f;
+	font-weight: bolder;
+	font-size: 120%;
+	margin-bottom: 1%;
+}
+
+.displayEpigrafe {
+	color: #a5b1ef;
+	font-weight: bolder;
+}
+
+.actividadDestacada {
+	font-weight: bold;
+}
+
+.displayEpigrafeBanned {
+	color: grey;
+	font-weight: bolder;
+	font-size: 120%;
+	margin-bottom: 1%;
+}
+
+.comentarioBanned {
+	color: grey;
+}

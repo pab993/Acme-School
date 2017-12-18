@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	
+	<definition name="yearSchool/list" extends="master.page">	
+		<put-attribute name="title" value="Listar años escolares" />
+		<put-attribute name="body" value="/views/yearSchool/list.jsp" />
+	</definition>
+	
+	<definition name="yearSchool/create" extends="master.page">	
+		<put-attribute name="title" value="Editar año escolar" />
+		<put-attribute name="body" value="/views/yearSchool/create.jsp" />
+	</definition>
+	
+	<definition name="yearSchool/detail" extends="master.page">	
+		<put-attribute name="title" value="Detalles" />
+		<put-attribute name="body" value="/views/yearSchool/details.jsp" />
+	</definition>
+	
+</tiles-definitions>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	
+	<definition name="schoolClass/list" extends="master.page">	
+		<put-attribute name="title" value="Listar clases" />
+		<put-attribute name="body" value="/views/schoolClass/list.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/create" extends="master.page">	
+		<put-attribute name="title" value="Editar clase" />
+		<put-attribute name="body" value="/views/schoolClass/create.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/detail" extends="master.page">	
+		<put-attribute name="title" value="Detalles" />
+		<put-attribute name="body" value="/views/schoolClass/details.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/asignar" extends="master.page">	
+		<put-attribute name="title" value="Asignar" />
+		<put-attribute name="body" value="/views/schoolClass/asignar.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/solicitar" extends="master.page">	
+		<put-attribute name="title" value="Solicitar" />
+		<put-attribute name="body" value="/views/schoolClass/solicitar.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/observacion" extends="master.page">	
+		<put-attribute name="title" value="Observacion" />
+		<put-attribute name="body" value="/views/schoolClass/observacion.jsp" />
+	</definition>
+	
+</tiles-definitions>

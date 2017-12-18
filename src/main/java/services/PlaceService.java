@@ -1,0 +1,59 @@
+package services;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.PlaceRepository;
+import domain.Manager;
+import domain.Place;
+
+@Service
+@Transactional
+public class PlaceService {
+	
+	@Autowired
+	private PlaceRepository placeRepository ;
+	@Autowired
+	private ActorService actorService;
+	
+	public PlaceService(){
+		super();
+	}
+	
+	// CRUD methods --------------------------------------------------------------------------------
+	public Place create() {
+		Assert.isTrue(actorService.isManager());
+		Place res = new Place();
+		res.setManager((Manager) actorService.findByPrincipal());
+		
+		return res;
+	}
+
+	public Place findOne(int placeId) {
+		return placeRepository.findOne(placeId);
+	}
+
+	public Collection<Place> findAll(){
+		return placeRepository.findAll();
+	}
+		
+	public Place save(Place place) {
+		Assert.notNull(place);
+		Assert.isTrue(place.getManager().equals(actorService.findByPrincipal()));
+		return placeRepository.save(place);
+	}
+
+	public void delete(Place place) {
+		Assert.notNull(place);
+		Assert.isTrue(placeRepository.exists(place.getId()));
+		
+		placeRepository.delete(place);
+		
+		Assert.isTrue(!placeRepository.exists(place.getId()));
+	}
+
+}

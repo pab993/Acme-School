@@ -1,0 +1,136 @@
+
+package domain;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import security.UserAccount;
+
+@Entity
+@Access(AccessType.PROPERTY)
+public abstract class Actor extends DomainEntity {
+
+	//Attributes 
+	// =================================================================
+
+	private String	name;
+	private String	surname;
+	private String	email;
+	private String	phone;
+	private String	phone2;
+	private String	address;
+	private Date	birthdate;
+
+
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@NotBlank
+	public String getName() {
+		return this.name;
+	}
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getSurname() {
+		return this.surname;
+	}
+	public void setSurname(final String surname) {
+		this.surname = surname;
+	}
+
+	@Email
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getEmail() {
+		return this.email;
+	}
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Pattern(regexp = "^([+]\\d{1,2}\\s?)?\\d{3}\\d+$")
+	public String getPhone() {
+		return this.phone;
+	}
+	public void setPhone(final String phone) {
+		this.phone = phone;
+	}
+
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Pattern(regexp = "^$|^([+]\\d{1,2}\\s?)?\\d{3}\\d+$")
+	public String getPhone2() {
+		return this.phone2;
+	}
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getAddress() {
+		return this.address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Past
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getBirthdate() {
+		return this.birthdate;
+	}
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+
+	//Relationships
+	// =================================================================
+
+	private UserAccount			userAccount	= new UserAccount();
+	private Collection<Folder>	folders		= new ArrayList<>();
+
+
+	@Valid
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	public UserAccount getUserAccount() {
+		return this.userAccount;
+	}
+	public void setUserAccount(final UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "actor")
+	public Collection<Folder> getFolders() {
+		return this.folders;
+	}
+	public void setFolders(final Collection<Folder> folders) {
+		this.folders = folders;
+	}
+
+}

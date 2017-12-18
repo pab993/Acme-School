@@ -1,0 +1,156 @@
+package services;
+
+import static org.springframework.util.Assert.isTrue;
+import static org.springframework.util.Assert.notNull;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import repositories.SchoolClassRepository;
+import domain.Child;
+import domain.School;
+import domain.SchoolClass;
+import domain.Teacher;
+import domain.YearSchool;
+
+@Service
+@Transactional
+public class SchoolClassService {
+	
+	@Autowired
+	private SchoolClassRepository schoolclassRepository ;
+	
+	@Autowired
+	private SchoolService schoolService;
+	
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private YearSchoolService yearSchoolService;
+	
+	@Autowired
+	private TeacherService teacherService;
+	
+	public SchoolClassService(){
+		super();
+	}
+	
+	// CRUD methods --------------------------------------------------------------------------------
+	public SchoolClass create(int idSchool) {
+		School school = schoolService.findOne(idSchool);
+		notNull(school);
+		isTrue(!school.getIsCancel());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(school.getManager()));
+		SchoolClass res = new SchoolClass();
+		res.setSchool(school);
+		res.setYearSchool(yearSchoolService.getYearSchoolIsActiveTrue());
+		return res;
+	}
+
+	public SchoolClass findOne(int schoolclassId) {
+		SchoolClass schoolClass = schoolclassRepository.findOne(schoolclassId);
+		Assert.isTrue(!schoolClass.getIsArchive() || actorService.isAdmin() || schoolClass.getSchool().getManager().equals(actorService.findByPrincipal()));
+		Assert.isTrue(!schoolClass.getSchool().getIsArchive() || actorService.isAdmin() || schoolClass.getSchool().getManager().equals(actorService.findByPrincipal()));
+		Assert.isTrue(!schoolClass.getSchool().getIsCancel() || actorService.isAdmin() || schoolClass.getSchool().getManager().equals(actorService.findByPrincipal()));
+		return schoolClass;
+	}
+
+	public Collection<SchoolClass> findAll(){
+		return schoolclassRepository.findAll();
+	}
+		
+	public SchoolClass save(SchoolClass schoolclass) {
+		notNull(schoolclass);
+		isTrue(!schoolclass.getSchool().getIsCancel());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(schoolclass.getSchool().getManager()));
+		isTrue(schoolclass.getYearSchool().getIsActive());
+		
+		return schoolclassRepository.save(schoolclass);
+	}
+
+	public void archivar (int schoolclassId){
+		SchoolClass schoolclass = schoolclassRepository.findOne(schoolclassId);
+		notNull(schoolclass);
+		isTrue(!schoolclass.getIsArchive());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(schoolclass.getSchool().getManager()));
+		schoolclass.setIsArchive(true);
+		this.schoolclassRepository.save(schoolclass);
+	}
+	
+	public void desarchivar (int schoolclassId){
+		SchoolClass schoolclass = schoolclassRepository.findOne(schoolclassId);
+		notNull(schoolclass);
+		isTrue(schoolclass.getIsArchive());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(schoolclass.getSchool().getManager()));
+		schoolclass.setIsArchive(false);
+		this.schoolclassRepository.save(schoolclass);
+	}
+	
+	public void delete(SchoolClass schoolclass) {
+		notNull(schoolclass);
+		isTrue(schoolclassRepository.exists(schoolclass.getId()));
+		
+		schoolclassRepository.delete(schoolclass);
+		
+		isTrue(!schoolclassRepository.exists(schoolclass.getId()));
+	}
+
+	public Collection<SchoolClass> findAllByClasse(String keyword, YearSchool yearSchool, School school) {
+		return schoolclassRepository.findAllByClasse("%"+keyword+"%", yearSchool.getId(), school.getId());
+	}
+	
+	public Collection<SchoolClass> findAllByClasseActive(String keyword, YearSchool yearSchool, School school) {
+		return schoolclassRepository.findAllByClasseActive("%"+keyword+"%", yearSchool.getId(), school.getId());
+	}
+
+	public void asignar(SchoolClass schoolClass, Teacher teacher) {
+		notNull(schoolClass);
+		notNull(teacher);
+		isTrue(!schoolClass.getIsArchive());
+		isTrue(!teacher.getIsArchive());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(schoolClass.getSchool().getManager()));
+		isTrue(teacher.getSchool().equals(schoolClass.getSchool()));
+		isTrue(!schoolClass.getTeacher().contains(teacher));
+		schoolClass.getTeacher().add(teacher);
+		teacher.getSchoolClass().add(schoolClass);
+		schoolclassRepository.save(schoolClass);
+		teacherService.save(teacher);
+	}
+
+	public void desasignar(int idClass, int idTeacher) {
+		SchoolClass schoolClass = schoolclassRepository.findOne(idClass);
+		Teacher teacher = teacherService.findOne(idTeacher);
+		isTrue(!schoolClass.getIsArchive());
+		isTrue(!teacher.getIsArchive());
+		isTrue(actorService.isManager());
+		isTrue(actorService.findByPrincipal().equals(schoolClass.getSchool().getManager()));
+		isTrue(teacher.getSchool().equals(schoolClass.getSchool()));
+		isTrue(schoolClass.getTeacher().contains(teacher));
+		schoolClass.getTeacher().remove(teacher);
+		teacher.getSchoolClass().remove(schoolClass);
+		schoolclassRepository.save(schoolClass);
+		teacherService.save(teacher);
+	}
+
+	public Collection<SchoolClass> findAllByTeacherActivas(String keyword,
+			YearSchool yearSchool, Teacher teacher) {
+		return schoolclassRepository.findAllByTeacherActivas("%"+keyword+"%", yearSchool.getId(), teacher.getId());
+	}
+
+	public Collection<SchoolClass> findAllByChildActivas(String keyword, YearSchool yearSchool,
+			Child child) {
+		isTrue(actorService.isParent());
+		isTrue(actorService.findByPrincipal().equals(child.getParent()));
+		return schoolclassRepository.findAllByChildActivas("%"+keyword+"%", yearSchool.getId(), child.getId());
+	}
+}

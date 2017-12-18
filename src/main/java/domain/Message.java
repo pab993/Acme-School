@@ -1,0 +1,117 @@
+
+package domain;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.Valid;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
+@Access(AccessType.PROPERTY)
+public class Message extends DomainEntity {
+
+	private Date	moment;
+	private String	subject;
+	private String	body;
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Past
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getMoment() {
+		return this.moment;
+	}
+
+	public void setMoment(Date moment) {
+		this.moment = moment;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getSubject() {
+		return this.subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getBody() {
+		return this.body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+
+	//Relationships
+	private Actor				send;
+	private Collection<Actor>	receives	= new ArrayList<>();
+	private Folder				folder;
+
+
+	@Valid
+	@ManyToOne(optional = false)//, fetch = FetchType.LAZY)
+	public Actor getSend() {
+		return this.send;
+	}
+
+	public void setSend(Actor send) {
+		this.send = send;
+	}
+
+	//@NotEmpty
+	@Valid
+	@ManyToMany()//fetch = FetchType.LAZY)
+	public Collection<Actor> getReceives() {
+		return this.receives;
+	}
+
+	public void setReceives(Collection<Actor> receives) {
+		this.receives = receives;
+	}
+
+	@Valid
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	public Folder getFolder() {
+		return this.folder;
+	}
+
+	public void setFolder(Folder folder) {
+		this.folder = folder;
+	}
+
+	@Override
+	@Transient
+	public Message clone() {
+		Message msg = new Message();
+		msg.setBody(this.body);
+		msg.setMoment(this.moment);
+		msg.setReceives(this.receives);
+		msg.setSubject(this.subject);
+		msg.setSend(this.send);
+
+		return msg;
+	}
+
+}

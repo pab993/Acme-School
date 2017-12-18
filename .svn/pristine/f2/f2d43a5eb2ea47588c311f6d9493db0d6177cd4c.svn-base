@@ -1,0 +1,25 @@
+
+atras = Return
+
+specialEvent.confirm.incribirse  = Are you sure you want to sign up?
+specialEvent.confirm.incribirse2 = You are going to make the registration
+specialEvent.dateFin             = Date fin
+specialEvent.dateInit            = Date init
+specialEvent.description         = Description
+specialEvent.inscribirse         = Register
+specialEvent.inscrito            = Signed up
+specialEvent.place               = Place
+specialEvent.priority            = Priority
+specialEvent.space               = Space max.
+specialEvent.title               = Title
+specialEvent.create		 = Create a new event
+
+validation.espacioNoDisponible  = Not available for the chosen date
+validation.fechaAnterior        = The start date is before the end date
+validation.spacioMaximoSuperado = Maximum capacity exceeded (max.:{0})
+
+message.priority.very.important = Very important
+message.priority.important		= Important
+message.priority.normal			= Normal
+
+event.places.empty				= Cannot create event because there are not places available

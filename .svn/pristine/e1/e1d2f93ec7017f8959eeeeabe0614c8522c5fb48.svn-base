@@ -1,0 +1,8 @@
+
+creditCard.brandName       = Brand name
+creditCard.create          = Create credit card
+creditCard.cvv             = CVV
+creditCard.expirationMonth = Expiration month
+creditCard.expirationYear  = Expiration year
+creditCard.holderName      = Holder name
+creditCard.number          = Number

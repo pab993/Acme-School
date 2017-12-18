@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="teacher" />
+		<property name="password" value="8d788385431273d11e8b43bb78f3aa41" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="TEACHER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="parent" />
+		<property name="password" value="d0e45878043844ffc41aac437e86b602" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PARENT" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="manager1" />
+		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="manager2" />
+		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Other domain beans come here -->
+
+	<!-- ADMINISTRATORS -->
+	<bean id="admin" class="domain.Admin">
+		<property name="name" value="NameAdmin" />
+		<property name="surname" value="SurnameAdmin" />
+		<property name="phone" value="+34647382899" />
+		<property name="phone2" value="+34647382899" />
+		<property name="email" value="admin@gmail.com" />
+		<property name="address" value="c/cantabria nº5 (Sevilla)" />
+		<property name="birthdate" value="10/07/1992" />
+		<property name="userAccount" ref="userAccount1"/>
+	</bean>
+	
+	<!-- YEAR SCHOOL -->
+	<bean id="yearSchool1" class="domain.YearSchool">
+		<property name="anne" value="2016/2017" />
+	</bean>
+	<bean id="yearSchool2" class="domain.YearSchool">
+		<property name="anne" value="2017/2018" />
+		<property name="isActive" value="true" />
+	</bean>
+	<bean id="yearSchool3" class="domain.YearSchool">
+		<property name="anne" value="2018/2019" />
+	</bean>
+	
+	<!-- MANAGER -->
+	<bean id="manager1" class="domain.Manager">
+		<property name="name" value="NameManager1" />
+		<property name="surname" value="SurnameManager1" />
+		<property name="phone" value="+34647382899" />
+		<property name="phone2" value="+34647382899" />
+		<property name="email" value="manager1@gmail.com" />
+		<property name="address" value="c/casas nº15 (Sevilla)" />
+		<property name="birthdate" value="15/01/1990" />
+		<property name="userAccount" ref="userAccount4" />
+	</bean>
+	
+	<bean id="manager2" class="domain.Manager">
+		<property name="name" value="NameManager1" />
+		<property name="surname" value="SurnameManager1" />
+		<property name="phone" value="+34647382899" />
+		<property name="phone2" value="+34647382899" />
+		<property name="email" value="manager1@gmail.com" />
+		<property name="address" value="c/casas nº15 (Sevilla)" />
+		<property name="birthdate" value="15/01/1990" />
+		<property name="userAccount" ref="userAccount5" />
+	</bean>
+	
+	<!-- CREDIT CARD -->
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holderName" value="Jaime" />
+		<property name="brandName" value="Visa" />
+		<property name="number" value="5228926684479919" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="2020" />
+		<property name="cvv" value="455" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="holderName" value="Francisco" />
+		<property name="brandName" value="MasterCard" />
+		<property name="number" value="5134980181517930" />
+		<property name="expirationMonth" value="8" />
+		<property name="expirationYear" value="2028" />
+		<property name="cvv" value="500" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<!-- SCHOOL -->
+	<bean id="school1" class="domain.School">
+		<property name="name" value="school SAFA"/>
+		<property name="description" value="Colegio secundaria"/>
+		<property name="address" value="C/colegio nº1"/>
+		<property name="profileImg" value="https://pbs.twimg.com/profile_images/832205757894496258/UmAiMwWm.jpg"/>
+		<property name="galery">
+			<list>
+				<bean class="domain.dateType.Url">
+					<property name="url" value="http://villacarrillo.safa.edu/images/JPG/image.png"/>
+				</bean>
+				<bean class="domain.dateType.Url">
+					<property name="url" value="https://www.fundacionbertelsmann.org/typo3temp/GB/csm_OPC_-_Safa_ICET_LOGO_610x295_2bd1af5883_925d883659.jpg"/>
+				</bean>
+				<bean class="domain.dateType.Url">
+					<property name="url" value="http://linares.safa.edu/images/stories/linares/logo_75_aos.jpg"/>
+				</bean>
+			</list>
+		</property>
+		<property name="video" value="https://www.youtube.com/embed/jjqV7j7JZ5s" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<bean id="school2" class="domain.School">
+		<property name="name" value="school SAFA archivada"/>
+		<property name="description" value="Colegio secundaria"/>
+		<property name="address" value="C/colegio nº1"/>
+		<property name="profileImg" value="https://pbs.twimg.com/profile_images/832205757894496258/UmAiMwWm.jpg"/>
+		<property name="manager" ref="manager1"/>
+		<property name="isArchive" value="true"/>
+	</bean>
+	
+	<bean id="school3" class="domain.School">
+		<property name="name" value="school SAFA cancel"/>
+		<property name="description" value="Colegio secundaria"/>
+		<property name="address" value="C/colegio nº1"/>
+		<property name="profileImg" value="https://pbs.twimg.com/profile_images/832205757894496258/UmAiMwWm.jpg"/>
+		<property name="manager" ref="manager1"/>
+		<property name="isCancel" value="true"/>
+		<property name="descriptionCancel" value="Description cancel"/>
+	</bean>
+	
+	<!-- TEACHER -->
+	<bean id="teacher1" class="domain.Teacher">
+		<property name="name" value="NameTeacher1" />
+		<property name="surname" value="SurnameTeacher1" />
+		<property name="phone" value="+34647382899" />
+		<property name="phone2" value="+34647382899" />
+		<property name="email" value="teacher1@gmail.com" />
+		<property name="address" value="c/profesor nº52 (Sevilla)" />
+		<property name="birthdate" value="25/01/1987" />
+		<property name="userAccount" ref="userAccount2" />
+		<property name="school" ref="school1" />
+		<property name="schoolClass">
+			<list>
+				<ref bean="schoolClass1"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- PARENT -->
+	<bean id="parent1" class="domain.Parent">
+		<property name="name" value="NameParent1" />
+		<property name="surname" value="SurnameParent1" />
+		<property name="phone" value="+34647382899" />
+		<property name="phone2" value="" />
+		<property name="email" value="parent1@gmail.com" />
+		<property name="address" value="c/paraca nº1 (Sevilla)" />
+		<property name="birthdate" value="25/05/1981" />
+		<property name="userAccount" ref="userAccount3" />
+	</bean>
+	
+	<bean id="child1" class="domain.Child">
+		<property name="name" value="Child1" />
+		<property name="surname" value="SurnameChild1" />
+		<property name="birthdate" value="25/05/1999" />
+		<property name="parent" ref="parent1" />
+	</bean>
+	
+	<bean id="child2" class="domain.Child">
+		<property name="name" value="Child2" />
+		<property name="surname" value="SurnameChild2" />
+		<property name="birthdate" value="25/05/2005" />
+		<property name="parent" ref="parent1" />
+	</bean>
+	
+	<bean id="child3" class="domain.Child">
+		<property name="name" value="Child3" />
+		<property name="surname" value="SurnameChild3" />
+		<property name="birthdate" value="25/05/2010" />
+		<property name="parent" ref="parent1" />
+	</bean>
+	
+	<!-- FOLDERS -->
+	<bean id="inbox1" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="admin" />
+	</bean>
+	
+	<bean id="inbox2" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager1" />
+	</bean>
+	
+	<bean id="inbox3" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="teacher1" />
+	</bean>
+	
+	<bean id="inbox4" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="parent1" />
+	</bean>
+	
+	<bean id="inbox5" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager2" />
+	</bean>
+
+	<bean id="outbox1" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="admin" />
+	</bean>
+	
+	<bean id="outbox2" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager1" />
+	</bean>
+	
+	<bean id="outbox3" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="teacher1" />
+	</bean>
+	
+	<bean id="outbox4" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="parent1" />
+	</bean>
+	
+	<bean id="outbox5" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager2" />
+	</bean>
+	
+	<bean id="delete1" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="admin" />
+	</bean>
+	
+	<bean id="delete2" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager1" />
+	</bean>
+	
+	<bean id="delete3" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="teacher1" />
+	</bean>
+	
+	<bean id="delete4" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="parent1" />
+	</bean>
+
+	<bean id="delete5" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="description" value="Carpeta inbox" />
+		<property name="isSystem" value="true" />
+		<property name="actor" ref="manager2" />
+	</bean>
+
+	<!-- MESSAGES -->
+	<bean id="message1" class="domain.Message">
+		<property name="moment" value="2016/10/22 10:00" />
+		<property name="subject" value="subject1" />
+		<property name="body" value="body1" />
+		<property name="folder" ref="outbox1" />
+		<property name="send" ref="admin" />
+		<property name="receives">
+			<list>
+				<ref bean="admin" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- COMMENT -->
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="Comentario 1"/>
+		<property name="createMoment" value="08/05/2017 15:12"/>
+		<property name="text" value="Este es el texto del comentario"/>
+		<property name="stars" value="3"/>
+		<property name="actor" ref="manager1"/>
+		<property name="school" ref="school1"/>
+	</bean>
+	
+	<bean id="comment2" class="domain.Comment">
+		<property name="title" value="Comentario 2"/>
+		<property name="createMoment" value="08/05/2017 15:12"/>
+		<property name="text" value="Este es el texto del comentario"/>
+		<property name="stars" value="4"/>
+		<property name="actor" ref="manager1"/>
+		<property name="school" ref="school1"/>
+	</bean>
+	
+	<bean id="comment3" class="domain.Comment">
+		<property name="title" value="Comentario 3"/>
+		<property name="createMoment" value="08/05/2017 15:12"/>
+		<property name="text" value="Este es el texto del comentario"/>
+		<property name="stars" value="2"/>
+		<property name="actor" ref="manager1"/>
+		<property name="school" ref="school1"/>
+	</bean>
+	
+	<bean id="comment4" class="domain.Comment">
+		<property name="title" value="Comentario 4"/>
+		<property name="createMoment" value="08/05/2017 15:12"/>
+		<property name="text" value="Este es el texto del comentario"/>
+		<property name="stars" value="2"/>
+		<property name="actor" ref="manager1"/>
+		<property name="school" ref="school2"/>
+	</bean>
+
+	<!-- PLACE -->
+	<bean id="place1" class="domain.Place">
+		<property name="name" value="place 1" />
+		<property name="address" value="C/ place" />
+		<property name="spaceMax" value="250" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<bean id="place2" class="domain.Place">
+		<property name="name" value="place 2" />
+		<property name="address" value="C/ place" />
+		<property name="spaceMax" value="500" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<bean id="place3" class="domain.Place">
+		<property name="name" value="place 3" />
+		<property name="address" value="C/ place" />
+		<property name="spaceMax" value="20" />
+		<property name="manager" ref="manager1"/>
+	</bean>
+	
+	<!-- SPECIAL EVENT -->
+	
+	<bean id="specialEvent1" class="domain.SpecialEvent">
+		<property name="title" value="specialEvent colegio1"/>
+		<property name="description" value="Description" />
+		<property name="dateInit" value="10/07/2019 22:00" />
+		<property name="dateFin" value="10/07/2019 22:00" />
+		<property name="priority" value="VERY_IMPORTANT"/>
+		<property name="space" value="1"/>
+		<property name="eventEntity" ref="school1"/>
+		<property name="place" ref="place1"/>
+		<property name="isCancel" value="false"/>
+	</bean>
+	
+	<bean id="specialEvent2" class="domain.SpecialEvent">
+		<property name="title" value="specialEvent colegio1 cancelado"/>
+		<property name="description" value="Description" />
+		<property name="dateInit" value="10/07/2019 22:00" />
+		<property name="dateFin" value="10/07/2019 22:00" />
+		<property name="priority" value="VERY_IMPORTANT"/>
+		<property name="space" value="1"/>
+		<property name="eventEntity" ref="school1"/>
+		<property name="place" ref="place1"/>
+		<property name="isCancel" value="true"/>
+	</bean>
+	
+	<bean id="specialEvent3" class="domain.SpecialEvent">
+		<property name="title" value="specialEvent colegio1 cancelado"/>
+		<property name="description" value="Description" />
+		<property name="dateInit" value="10/07/2019 22:00" />
+		<property name="dateFin" value="10/07/2019 22:00" />
+		<property name="priority" value="VERY_IMPORTANT"/>
+		<property name="space" value="1"/>
+		<property name="eventEntity" ref="schoolClass1"/>
+		<property name="place" ref="place1"/>
+		<property name="isCancel" value="true"/>
+	</bean>
+	
+	<bean id="specialEvent4" class="domain.SpecialEvent">
+		<property name="title" value="specialEvent colegio1 cancelado"/>
+		<property name="description" value="Description" />
+		<property name="dateInit" value="10/07/2019 22:00" />
+		<property name="dateFin" value="10/07/2019 22:00" />
+		<property name="priority" value="VERY_IMPORTANT"/>
+		<property name="space" value="1"/>
+		<property name="eventEntity" ref="schoolClass1"/>
+		<property name="place" ref="place1"/>
+		<property name="isCancel" value="true"/>
+	</bean>
+	
+	<!-- BOARD -->
+	<bean id="schoolBoard1" class="domain.Board">
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="dateFinValidation" value="10/07/2019 22:00" />
+		<property name="eventEntity" ref="school1"/>
+	</bean>
+	
+	<bean id="schoolBoard2" class="domain.Board">
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="dateFinValidation" value="10/10/2020 22:00" />
+		<property name="eventEntity" ref="school1"/>
+	</bean>
+	
+	<bean id="schoolBoard3" class="domain.Board">
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="dateFinValidation" value="10/07/2019 22:00" />
+		<property name="eventEntity" ref="schoolClass1"/>
+	</bean>
+	
+	<bean id="schoolBoard4" class="domain.Board">
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="dateFinValidation" value="10/10/2020 22:00" />
+		<property name="eventEntity" ref="schoolClass1"/>
+	</bean>
+
+	<!-- SCHOOL CLASS -->
+	
+	<bean id="schoolClass1" class="domain.SchoolClass">
+		<property name="name" value="schoolClass"/>
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="isArchive" value="false"/>
+		<property name="yearSchool" ref="yearSchool2"/>
+		<property name="school" ref="school1" />
+	</bean>
+	
+	<bean id="schoolClass2" class="domain.SchoolClass">
+		<property name="name" value="schoolClass Archivada"/>
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="isArchive" value="true"/>
+		<property name="yearSchool" ref="yearSchool2"/>
+		<property name="school" ref="school1" />
+	</bean>
+	
+	<bean id="schoolClass3" class="domain.SchoolClass">
+		<property name="name" value="schoolClass clase archivada"/>
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="isArchive" value="false"/>
+		<property name="yearSchool" ref="yearSchool2"/>
+		<property name="school" ref="school2" />
+	</bean>
+	
+	<bean id="schoolClass4" class="domain.SchoolClass">
+		<property name="name" value="schoolClass clase cancelada"/>
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="isArchive" value="false"/>
+		<property name="yearSchool" ref="yearSchool2"/>
+		<property name="school" ref="school3" />
+	</bean>
+	
+	<bean id="schoolClass5" class="domain.SchoolClass">
+		<property name="name" value="schoolClass año no activo"/>
+		<property name="description" value="Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum que se encuentran en Internet tienden a repetir trozos predefinidos cuando sea necesario, haciendo a este el único generador verdadero (válido) en la Internet. Usa un diccionario de mas de 200 palabras provenientes del latín, combinadas con estructuras muy útiles de sentencias, para generar texto de Lorem Ipsum que parezca razonable. Este Lorem Ipsum generado siempre estará libre de repeticiones, humor agregado o palabras no características del lenguaje, etc." />
+		<property name="isArchive" value="false"/>
+		<property name="yearSchool" ref="yearSchool1"/>
+		<property name="school" ref="school1" />
+	</bean>
+</beans>

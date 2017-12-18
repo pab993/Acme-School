@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2013 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+	
+	<definition name="teacher/list" extends="master.page">	
+		<put-attribute name="title" value="List teachers" />
+		<put-attribute name="body" value="/views/teacher/list.jsp" />
+	</definition>
+	
+	<definition name="teacher/create" extends="master.page">	
+		<put-attribute name="title" value="Edit teacher" />
+		<put-attribute name="body" value="/views/teacher/create.jsp" />
+	</definition>
+	
+	<definition name="teacher/detail" extends="master.page">	
+		<put-attribute name="title" value="Details" />
+		<put-attribute name="body" value="/views/teacher/details.jsp" />
+	</definition>
+	
+</tiles-definitions>

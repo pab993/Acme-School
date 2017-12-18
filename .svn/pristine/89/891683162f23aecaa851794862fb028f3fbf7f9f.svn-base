@@ -1,0 +1,18 @@
+
+atras = Return
+
+specialEvent.dateFin     = Date fin
+specialEvent.dateInit    = Date init
+specialEvent.description = Description
+specialEvent.place       = Place
+specialEvent.priority    = Priority
+specialEvent.space       = Space max.
+specialEvent.title       = Title
+
+validation.espacioNoDisponible  = Not available for the chosen date
+validation.fechaAnterior        = The start date is before the end date
+validation.spacioMaximoSuperado = Maximum capacity exceeded (max.:{0})
+
+message.priority.very.important = Very important
+message.priority.important		= Important
+message.priority.normal			= Normal

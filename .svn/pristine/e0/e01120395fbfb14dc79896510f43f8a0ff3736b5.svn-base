@@ -1,0 +1,18 @@
+
+atras = Atras
+
+specialEvent.dateFin     = Fecha fin
+specialEvent.dateInit    = Fecha inicio
+specialEvent.description = Descripci\u00F3n
+specialEvent.place       = Edificio
+specialEvent.priority    = Prioridad
+specialEvent.space       = Espacio m\u00E1ximo
+specialEvent.title       = Titulo
+
+validation.espacioNoDisponible  = No est\u00E1 disponible para la fecha elegida
+validation.fechaAnterior        = La fecha de inicio es anterior a la fecha de fin
+validation.spacioMaximoSuperado = Capacidad m\u00E1xima superada (max.:{0})
+
+message.priority.very.important = Muy importante
+message.priority.important		= Importante
+message.priority.normal			= Normal

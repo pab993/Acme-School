@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2013 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+	
+	<definition name="schoolClass/list" extends="master.page">	
+		<put-attribute name="title" value="List schoolClasss" />
+		<put-attribute name="body" value="/views/schoolClass/list.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/create" extends="master.page">	
+		<put-attribute name="title" value="Send schoolClass" />
+		<put-attribute name="body" value="/views/schoolClass/create.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/detail" extends="master.page">	
+		<put-attribute name="title" value="Details" />
+		<put-attribute name="body" value="/views/schoolClass/details.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/asignar" extends="master.page">	
+		<put-attribute name="title" value="Asigne" />
+		<put-attribute name="body" value="/views/schoolClass/asignar.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/solicitar" extends="master.page">	
+		<put-attribute name="title" value="solicite" />
+		<put-attribute name="body" value="/views/schoolClass/solicitar.jsp" />
+	</definition>
+	
+	<definition name="schoolClass/observacion" extends="master.page">	
+		<put-attribute name="title" value="Observacion" />
+		<put-attribute name="body" value="/views/schoolClass/observacion.jsp" />
+	</definition>
+	
+</tiles-definitions>

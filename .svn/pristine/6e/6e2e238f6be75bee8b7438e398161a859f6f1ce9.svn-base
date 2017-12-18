@@ -1,0 +1,109 @@
+
+package controllers.manager;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.ActorService;
+import services.CreditCardService;
+import controllers.AbstractController;
+import domain.CreditCard;
+import domain.Manager;
+
+@Controller
+@RequestMapping("/creditCard/manager")
+public class ManagerCreditCardController extends AbstractController {
+
+	// Services -----------------------------------------------------------
+
+	@Autowired
+	private CreditCardService	creditCardService;
+
+	@Autowired
+	private ActorService		actorService;
+
+
+	// Constructors -----------------------------------------------------------
+
+	public ManagerCreditCardController() {
+		super();
+	}
+
+	// Index ------------------------------------------------------------------		
+
+	@RequestMapping(value = "/list")
+	public ModelAndView list(@RequestParam(required = false) String messageSuccess, @RequestParam(required = false) String messageError) {
+		ModelAndView result;
+
+		result = new ModelAndView("creditCard/list");
+		result.addObject("listCreditCard", ((Manager) this.actorService.findByPrincipal()).getCreditCards());
+		result.addObject("messageSuccess", messageSuccess);
+		result.addObject("message", messageError);
+		result.addObject("btnAtras", "/");
+		return result;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public ModelAndView add() {
+
+		ModelAndView result;
+		result = this.createEditModelAndViewCreate(this.creditCardService.create(), null, null);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, params = "save")
+	public ModelAndView add(@Valid CreditCard creditCard, final BindingResult binding) {
+		ModelAndView result;
+		this.creditCardService.recontruct(creditCard, binding);
+		try {
+			if (binding.hasErrors())
+				result = this.createEditModelAndViewCreate(creditCard, "actorRegister.save.error", null);
+			else {
+				result = new ModelAndView("redirect:/creditCard/manager/list.do?messageSuccess=child.create.success");
+				this.creditCardService.save(creditCard);
+			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndViewCreate(creditCard, "actorRegister.save.error", null);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView deleted(@RequestParam final int id) {
+
+		ModelAndView result;
+		try {
+			CreditCard creditCard = this.creditCardService.findOne(id);
+			Assert.isTrue(creditCard.getManager().equals(this.actorService.findByPrincipal()));
+			result = new ModelAndView("redirect:/creditCard/manager/list.do?messageSuccess=child.delete.success");
+			this.creditCardService.delete(creditCard);
+		} catch (Exception e) {
+			result = new ModelAndView("redirect:/panic/misc.do");
+		}
+
+		return result;
+	}
+
+	private ModelAndView createEditModelAndViewCreate(final CreditCard creditCard, final String message, String success) {
+
+		final ModelAndView resul = new ModelAndView("creditCard/create");
+
+		resul.addObject("urlSubmit", "creditCard/manager/add.do");
+		resul.addObject("creditCard", creditCard);
+		resul.addObject("message", message);
+		resul.addObject("messageSuccess", success);
+		resul.addObject("btnAtras", "/creditCard/manager/list.do");
+		return resul;
+	}
+
+}

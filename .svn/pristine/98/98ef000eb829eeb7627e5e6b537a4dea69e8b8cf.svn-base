@@ -1,0 +1,32 @@
+
+alumnos = Students
+
+bservacion.descripcion = Description
+
+child = Childs
+
+observacion.titulo = Title
+child.moment	   = Moment
+child.state			= State
+
+observation.description = Description
+observation.titule      = Title
+
+peticiones = Petitions
+
+profesores = Teachers
+
+school.desasignar         = Unassign
+
+schoolClass.aceptar       = Accept
+schoolClass.cancelar      = Cancel
+schoolClass.observacion   = Observation
+
+schoolClasses.asignar     = Assing
+schoolClasses.create      = Create class
+schoolClasses.description = Description
+schoolClasses.name        = Name
+schoolClasses.solicitar   = Apply for
+schoolClasses.yearSchool  = Year school
+application.confirm.accept	= Are you sure to accept this child?
+application.confirm.cancel  = Are you sure to cancel this petition?

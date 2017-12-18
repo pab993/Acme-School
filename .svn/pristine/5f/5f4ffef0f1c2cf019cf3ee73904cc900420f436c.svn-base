@@ -1,0 +1,70 @@
+package controllers.parent;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import services.ActorService;
+import services.ChildService;
+import services.SpecialEventService;
+import controllers.AbstractController;
+import domain.Child;
+import domain.Parent;
+
+@Controller
+@RequestMapping("/child/parent/event")
+public class ParentChildEventController extends AbstractController {
+
+	// Services -----------------------------------------------------------
+
+	@Autowired
+	private ChildService childService;
+	
+	@Autowired
+	private SpecialEventService specialEventService;
+	
+	// Constructors -----------------------------------------------------------
+
+	public ParentChildEventController() {
+		super();
+	}
+
+	// Index ------------------------------------------------------------------		
+
+	@RequestMapping(value = "{idChild}/list")
+	public ModelAndView list(@PathVariable final int idChild, @RequestParam(required=false) String messageSuccess, @RequestParam(required=false) String messageError) {
+		ModelAndView result;
+
+		result = new ModelAndView("specialEvent/list");
+		result.addObject("listBoard", (specialEventService.getMisPosiblesSpecialEvent(idChild)));
+		result.addObject("child", childService.findOne(idChild));
+		result.addObject("messageSuccess", messageSuccess);
+		result.addObject("message", messageError);
+		return result;
+	}
+	
+	@RequestMapping(value = "/{idChild}/inscribirse", method = RequestMethod.GET)
+	public ModelAndView aceptar(@PathVariable final int idChild, @RequestParam final int id) {
+		ModelAndView result;
+		try {
+			result = new ModelAndView("redirect:/child/parent/event/"+idChild+"/list.do?messageSuccess=child.edit.success");
+			this.specialEventService.inscribirse(idChild,id);
+		} catch (final Throwable oops) {
+			try {
+				result = new ModelAndView("redirect:/child/parent/event/"+idChild+"/list.do?messageError=actorRegister.save.error");
+			} catch (Exception e) {
+				result = new ModelAndView("redirect:/panic/misc.do");
+			}
+		}
+		return result;
+	}
+	
+}

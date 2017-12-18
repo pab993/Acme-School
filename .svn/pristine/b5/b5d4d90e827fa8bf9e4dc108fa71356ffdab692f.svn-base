@@ -1,0 +1,28 @@
+
+alumnos = Students
+
+bservacion.descripcion = Description
+
+child = Childs
+
+observacion.titulo = Title
+
+observation.description = Description
+observation.titule      = Title
+
+peticiones = Petitions
+
+profesores = Teachers
+
+school.desasignar         = Unassign
+
+schoolClass.aceptar       = Accept
+schoolClass.cancelar      = Cancel
+schoolClass.observacion   = Observation
+
+schoolClasses.asignar     = Assing
+schoolClasses.create      = Create class
+schoolClasses.description = Description
+schoolClasses.name        = Name
+schoolClasses.solicitar   = Apply for
+schoolClasses.yearSchool  = Year school
